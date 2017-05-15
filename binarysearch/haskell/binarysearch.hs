@@ -33,5 +33,5 @@ main = do
     let rs = randomize 50 seed
     print (quicksort rs)
     putStrLn . show $ rs!!0
-    putStrLn ( show ( binarysearch (rs!!0) ( quicksort rs ) 0 ((length rs)-1) ) )
+    putStrLn . show $ binarysearch (rs!!0) ( quicksort rs ) 0 ((length rs)-1)
 

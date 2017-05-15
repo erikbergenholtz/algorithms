@@ -26,4 +26,4 @@ printarr (x:xs) = do
 main = do
     seed <- newStdGen
     let rs = randomize 50 seed
-    print (quicksort rs)
+    print $ quicksort rs
