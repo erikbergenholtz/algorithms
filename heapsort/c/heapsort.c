@@ -1,6 +1,9 @@
 /*
- * binheap.c
- * Binary Heap
+ * heapsort.c
+ * Heapsort
+ * Best:  O(n log(n))
+ * Avg.:  O(n log(n))
+ * Worst: O(n log(n))
  * Author: Erik Bergenholtz
  */
 
@@ -26,7 +29,6 @@ int main()
 	for(int i=0 ; i<size(mDep) ; i++) heap[i] = 0;
 	int tail = 0;
 	for(int i=0 ; i<50 ; ++i) insert(rand()%100, &heap, &tail, &mDep);
-	dump(heap, 0, 0, mDep);
 	for(int i=0 ; i<50 ; ++i) printf("%d ", extract(&heap, &tail));
 	printf("\n");
 	return 0;
