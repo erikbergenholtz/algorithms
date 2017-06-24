@@ -29,9 +29,7 @@ def mergesort(arr):
     return merge(mergesort(arr[:len(arr)/2]),mergesort(arr[len(arr)/2:]))
 
 def main():
-    arr = []
-    while len(arr) < 100:
-        arr.append(randint(0,100))
+    arr = [randint(0,100) for i in range(0,100)]
     print arr
     print mergesort(arr)
 
