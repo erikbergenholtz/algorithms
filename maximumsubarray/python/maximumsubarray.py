@@ -25,6 +25,7 @@
 import sys
 import math
 import random
+import time
 
 def getMidcrossingSubarray(arr, l, h, m):
     lSum = -float("inf")
@@ -70,13 +71,22 @@ def trivial(arr):
     return (lMax, rMax, mSum)
 
 def main():
-    arr = [random.randint(-15,15) for _ in range(30)]
-    #arr = [-9, -7, -6, 10, -2, 3, -8, 10, -6, -10, 4, -8, 13, -5, -1, -10, 12, -7, 11, 8, -14, -14, -13, 9, -12, 1, 14, 2, 7, -11]
-    print(arr)
+    n = 1000
+    if len(sys.argv) > 1:
+        try:
+            n = int(sys.argv[1])
+        except TypeError:
+            print("Usage: {} NUMBER".format(sys.argv[0]))
+            sys.exit(1)
+    arr = [random.randint(-15,15) for _ in range(n)]
+    start = time.time()
     l,h,s = getMaxSubarray(arr, 0, len(arr)-1)
-    print("Maximum subarray with a sum of {}:\n{}".format(s,arr[l:h+1]))
+    end = time.time()
+    print("Maximum subarray with a sum of {} found in {}s".format(s,end-start))
+    start = time.time()
     l,h,s = trivial(arr)
-    print("Maximum subarray with a sum of {}:\n{}".format(s,arr[l:h+1]))
+    end = time.time()
+    print("Maximum subarray with a sum of {} found in {}s".format(s,end-start))
     return 0
 
 if __name__ == '__main__':
