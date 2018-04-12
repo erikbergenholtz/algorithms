@@ -1,0 +1,15 @@
+graph G{
+0 [label="Key :4" style=filled fillcolor=lightgrey]
+0 -- 1 [label="left"]
+1 [label="Key :2" style=filled fillcolor=lightgrey]
+0 -- 2 [label="right"]
+2 [label="Key :12" style=filled fillcolor=red]
+2 -- 3 [label="left"]
+3 [label="Key :10" style=filled fillcolor=lightgrey]
+3 -- 4 [label="left"]
+4 [label="Key :8" style=filled fillcolor=red]
+3 -- 5 [label="right"]
+5 [label="Key :11" style=filled fillcolor=red]
+2 -- 6 [label="right"]
+6 [label="Key :13" style=filled fillcolor=lightgrey]
+}

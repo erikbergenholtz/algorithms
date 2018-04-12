@@ -9,25 +9,30 @@
 #include <time.h>
 #include <math.h>
 
-
+typedef struct {
+	int maxDepth;
+	int tail;
+	int *heap;
+} Heap;
 
 int size(int);
-void insert(int, int **, int *, int *);
-int extract(int **, int *);
+void insert(int, Heap *);
+int extract(Heap *);
 void swap(int *, int *);
-void expand(int **, int *);
-void dump(int *, int, int, int);
+void expand(Heap *);
+void dump(Heap *, int, int);
 
 int main()
 {
 	srand(time(NULL));
-	int mDep = 5;
-	int *heap = malloc(size(mDep)*sizeof(int));
-	for(int i=0 ; i<size(mDep) ; i++) heap[i] = 0;
-	int tail = 0;
-	for(int i=0 ; i<50 ; ++i) insert(rand()%100, &heap, &tail, &mDep);
-	dump(heap, 0, 0, mDep);
-	for(int i=0 ; i<50 ; ++i) printf("%d ", extract(&heap, &tail));
+	Heap h;
+	h.maxDepth = 5;
+	h.tail = 0;
+	h.heap = malloc(size(h.maxDepth)*sizeof(int));
+	for(int i=0 ; i<size(h.maxDepth) ; i++) h.heap[i] = 0;
+	for(int i=0 ; i<70 ; ++i) insert((rand()%100)+1, &h);
+	dump(&h, 0, 0);
+	for(int i=0 ; i<70 ; ++i) printf("%d ", extract(&h));
 	printf("\n");
 	return 0;
 }
@@ -37,38 +42,38 @@ int size(int depth)
 	return pow(2.0, (double)depth)-1;
 }
 
-void insert(int value, int **heap, int *tail, int *mDep)
+void insert(int value, Heap *heap)
 {
-	if((*tail) >= size(*mDep)) expand(heap, mDep);
-	(*heap)[*tail] = value;
-	int c = (*tail)++;
+	if((heap->tail) >= size(heap->maxDepth)) expand(heap);
+	heap->heap[heap->tail] = value;
+	int c = heap->tail++;
 	int p = (c-1)/2;
-	while((*heap)[c] > (*heap)[p])
+	while(heap->heap[c] > heap->heap[p])
 	{
-		swap(&(*heap)[c],&(*heap)[p]);
+		swap(&heap->heap[c],&heap->heap[p]);
 		c = p;
 		p = (c-1)/2;
 	}
 }
 
-int extract(int **heap, int *tail)
+int extract(Heap *h)
 {
-	int res = (*heap)[0];
-	(*heap)[0] = (*heap)[--(*tail)];
-	(*heap)[*tail] = 0;
+	int res = h->heap[0];
+	h->heap[0] = h->heap[--h->tail];
+	h->heap[h->tail] = 0;
 	int p = 0;
 	int c1 = (p*2)+1;
 	int c2 = (p*2)+2;
-	while((*heap)[c1] > (*heap)[p] || (*heap)[c2] > (*heap)[p])
+	while(h->heap[c1] > h->heap[p] || h->heap[c2] > h->heap[p])
 	{
-		if((*heap)[c1] > (*heap)[c2])
+		if(h->heap[c1] > h->heap[c2])
 		{
-			swap(&(*heap)[c1],&(*heap)[p]);
+			swap(&h->heap[c1],&h->heap[p]);
 			p = c1;
 		}
 		else
 		{
-			swap(&(*heap)[c2],&(*heap)[p]);
+			swap(&h->heap[c2],&h->heap[p]);
 			p = c2;
 		}
 		c1 = (p*2)+1;
@@ -84,23 +89,23 @@ void swap(int *a, int *b)
 	*b = tmp;
 }
 
-void expand(int **arr, int *mDep)
+void expand(Heap *h)
 {
-	int t = size(*mDep);
-	(*mDep) += 2;
-	(*arr) = realloc(*arr, size(*mDep)*sizeof(int));
-	for(; t<size(*mDep) ; ++t) (*arr)[t] = 0;
+	int t = size(h->maxDepth);
+	h->maxDepth += 2;
+	h->heap = realloc(h->heap, size(h->maxDepth)*sizeof(int));
+	for(; t<size(h->maxDepth) ; ++t) h->heap[t] = 0;
 }
 
-void dump(int *n, int i, int d, int mDep)
+void dump(Heap *h, int i, int d)
 {
 	for(int j=0 ; j<d ; ++j) printf("    ");
-	if(n[i] == 0 || i>=size(mDep))
+	if(h->heap[i] == 0 || i>=size(h->maxDepth))
 	{
 		printf("EMPTY\n");
 		return;
 	}
-	printf("%d\n",n[i]);
-	dump(n, 2*i+1, d+1, mDep);
-	dump(n, 2*i+2, d+1, mDep);
+	printf("%d\n",h->heap[i]);
+	dump(h, 2*i+1, d+1);
+	dump(h, 2*i+2, d+1);
 }
