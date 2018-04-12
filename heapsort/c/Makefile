@@ -1,8 +1,8 @@
 CC=gcc
 CFLAGS=-std=c99 -lm
 
-binheap: binheap.c
+heapsort: heapsort.c
 	$(CC) $(CFLAGS) $^ -o $@
 
 clean:
-	rm -rf binheap
+	rm -rf heapsort

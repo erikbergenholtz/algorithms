@@ -1,6 +1,9 @@
 /*
- * binheap.c
- * Binary Heap
+ * heapsort.c
+ * Heapsort
+ * Best:  O(n log(n))
+ * Avg.:  O(n log(n))
+ * Worst: O(n log(n))
  * Author: Erik Bergenholtz
  */
 

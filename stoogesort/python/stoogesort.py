@@ -18,9 +18,7 @@ def stooge(arr,l,h):
 	return arr
 
 def main():
-	arr = []
-	while len(arr) < 10:
-		arr.append(randint(0,100))
+	arr = [randint(0,100) for i in range(0,50)]
 	print arr
 	print stooge(arr,0, len(arr)-1)
 
